@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright (c) 2007-2009, Conduit Internet Technologies, Inc.
  * All rights reserved.
@@ -515,4 +514,8 @@ class SearchApiSolrDocument implements IteratorAggregate {
     // Printable utf-8 does not include any of these chars below x7F
     return preg_replace('@[\x00-\x08\x0B\x0C\x0E-\x1F]@', ' ', $string);
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7f11c54 (Issue #3324942 by Ronino, drunken monkey: Fixed deprecation warning in SearchApiSolrDocument::getIterator().)
 }
