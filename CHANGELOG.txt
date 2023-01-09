@@ -1,5 +1,7 @@
 Search API Solr Search 1.x, dev (xxxx-xx-xx):
 ---------------------------------------------
+- #3324942 by Ronino, drunken monkey: Fixed deprecation warning in
+  SearchApiSolrDocument::getIterator().
 - #1845920 by silverham, drunken monkey: Added config option for highlight tags.
 - #3118390 by drunken monkey, bburg: Fixed
   SearchApiSolrService::queryMultiple().

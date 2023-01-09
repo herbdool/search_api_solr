@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2007-2009, Conduit Internet Technologies, Inc.
  * All rights reserved.
@@ -144,8 +145,7 @@ class SearchApiSolrDocument implements IteratorAggregate {
 
     if ($boost > 0.0) {
       $this->documentBoost = $boost;
-    }
-    else {
+    } else {
       $this->documentBoost = FALSE;
     }
   }
@@ -178,8 +178,7 @@ class SearchApiSolrDocument implements IteratorAggregate {
     if (!isset($this->fields[$key])) {
       // create holding array if this is the first value
       $this->fields[$key] = array();
-    }
-    else if (!is_array($this->fields[$key])) {
+    } else if (!is_array($this->fields[$key])) {
       // move existing value into array if it is not already an array
       $this->fields[$key] = array($this->fields[$key]);
     }
@@ -187,8 +186,7 @@ class SearchApiSolrDocument implements IteratorAggregate {
     if ($this->getFieldBoost($key) === FALSE) {
       // boost not already set, set it now
       $this->setFieldBoost($key, $boost);
-    }
-    else if ((float) $boost > 0.0) {
+    } else if ((float) $boost > 0.0) {
       // multiply passed boost with current field boost - similar to SolrJ implementation
       $this->fieldBoosts[$key] *= (float) $boost;
     }
@@ -262,8 +260,7 @@ class SearchApiSolrDocument implements IteratorAggregate {
 
     if ($boost > 0.0) {
       $this->fieldBoosts[$key] = $boost;
-    }
-    else {
+    } else {
       $this->fieldBoosts[$key] = FALSE;
     }
   }
@@ -518,5 +515,4 @@ class SearchApiSolrDocument implements IteratorAggregate {
     // Printable utf-8 does not include any of these chars below x7F
     return preg_replace('@[\x00-\x08\x0B\x0C\x0E-\x1F]@', ' ', $string);
   }
-
 }
