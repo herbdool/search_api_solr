@@ -270,6 +270,10 @@ class SearchApiSolrService extends SearchApiAbstractService {
         '3' => '3.x',
         '4' => '4.x',
         '5' => '5.x',
+        '6' => '6.x',
+        '7' => '7.x',
+        '8' => '8.x',
+        '9' => '9.x',
       ),
       '#default_value' => $options['solr_version'],
     );
@@ -420,7 +424,7 @@ class SearchApiSolrService extends SearchApiAbstractService {
     if ($this->options['http_user']) {
       $vars = array(
         '@user' => $this->options['http_user'],
-        '@pass' => str_repeat('*', strlen($this->options['http_pass'])),
+        '@pass' => str_repeat('*', strlen($this->options['http_pass'] ?: '')),
       );
       $http = t('Username: @user; Password: @pass', $vars);
       $info[] = array(
@@ -537,14 +541,29 @@ class SearchApiSolrService extends SearchApiAbstractService {
 
   /**
    * Create a connection to the Solr server as configured in $this->options.
+   *
+   * @param bool $clean_path
+   *   A boolean indicating whether to remove # in path.
    */
-  protected function connect() {
+  protected function connect($clean_path = TRUE) {
     if (!$this->solr) {
       $connection_class = $this->getConnectionClass();
       if (!class_exists($connection_class)) {
         throw new SearchApiException(t('Invalid class @class set as Solr connection class.', array('@class' => $connection_class)));
       }
       $options = $this->options + array('server' => $this->server->machine_name);
+
+      // If clean path is set then remove (/#/) character patterns.
+      if ($clean_path && strpos($options['path'], '/#/')) {
+        $alternative_options = $options;
+        $alternative_options['path'] = str_replace('/#/', '/', $alternative_options['path']);
+
+        $this->solr = new $connection_class($alternative_options);
+        if ($this->solr instanceof SearchApiSolrConnectionInterface) {
+          return;
+        }
+      }
+
       $this->solr = new $connection_class($options);
       if (!($this->solr instanceof SearchApiSolrConnectionInterface)) {
         $this->solr = NULL;
@@ -993,7 +1012,7 @@ class SearchApiSolrService extends SearchApiAbstractService {
     if ($spatials = $query->getOption('search_api_location')) {
       foreach ($spatials as $i => $spatial) {
         // Spatial options all need a field to do anything.
-        if (!isset($spatial['field'])) {
+        if (!isset($spatial['field']) || !isset($fields[$spatial['field']])) {
           continue;
         }
 
@@ -1666,6 +1685,11 @@ class SearchApiSolrService extends SearchApiAbstractService {
     // be either "" or "_empty_", depending on the PHP version.
     $empty_key = key((array) json_decode('{"":5}'));
     foreach ($extract_facets as $delta => $info) {
+      // Skip if empty.
+      if (!isset($info['field']) || !isset($fields[$info['field']])) {
+        continue;
+      }
+
       $field = $fields[$info['field']];
       // Fields that have solr facet queries set need special handling.
       if (!empty($info['solr_facet_query'])) {
@@ -2042,6 +2066,7 @@ class SearchApiSolrService extends SearchApiAbstractService {
       $highlight_params['hl.simple.post'] = '[/HIGHLIGHT]';
       $highlight_params['hl.snippets'] = 1;
       $highlight_params['hl.fragsize'] = 0;
+      $highlight_params['hl.method'] = config_get('search_api_solr.settings', 'search_api_solr_highlight_method', 'original');
     }
 
     return $highlight_params;
@@ -2275,7 +2300,7 @@ class SearchApiSolrService extends SearchApiAbstractService {
             $matches = array_slice($matches, 0, $limit, TRUE);
 
             // Build suggestions using returned facets
-            $incomp_length = strlen($incomp);
+            $incomp_length = strlen($incomp ?: '');
             foreach ($matches as $term => $count) {
               if (backdrop_strtolower(substr($term, 0, $incomp_length)) == $incomp) {
                 $suggestions[] = array(
@@ -2605,7 +2630,7 @@ class SearchApiSolrService extends SearchApiAbstractService {
    * Uses the admin/ping request handler.
    */
   public function ping() {
-    $this->connect();
+    $this->connect(FALSE);
     return $this->solr->ping();
   }
 
@@ -2669,7 +2694,7 @@ class SearchApiSolrService extends SearchApiAbstractService {
    *   The solr connection object used by this server.
    */
   public function getSolrConnection() {
-    $this->connect();
+    $this->connect(FALSE);
     return $this->solr;
   }
 
@@ -2758,9 +2783,10 @@ class SearchApiSolrService extends SearchApiAbstractService {
   }
 
   /**
-   *
+   * Sanitize and format the snippet.
    *
    * @param $snippet
+   *   The snippet.
    *
    * @return string|string[]
    */

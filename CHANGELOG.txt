@@ -1,5 +1,14 @@
-Search API Solr Search 1.x, dev (xxxx-xx-xx):
----------------------------------------------
+Solr search 1.x, xxxx-xx-xx (development version)
+-----------------------
+- Add Solr 9 default configuration
+
+Search API Solr Search 1.17 (2025-04-07):
+-----------------------------------------
+- #3254212 by johnrosswvsu, drunken monkey: Added support for Solr 8 and fixes
+  for newer PHP versions.
+
+Search API Solr Search 1.16 (2023-11-02):
+-----------------------------------------
 - #3324942 by Ronino, drunken monkey: Fixed deprecation warning in
   SearchApiSolrDocument::getIterator().
 - #1845920 by silverham, drunken monkey: Added config option for highlight tags.

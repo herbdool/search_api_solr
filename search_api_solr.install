@@ -99,3 +99,15 @@ function search_api_solr_update_1000() {
   update_variable_del('search_api_solr_cron_action');
   update_variable_del('search_api_solr_last_optimize');
 }
+
+/**
+ * Move settings from variables to config.
+ */
+function search_api_solr_update_1001() {
+  // Migrate variables to config.
+  $config = config('search_api_solr.settings');
+  $config->set('search_api_solr_highlight_method', update_variable_get('search_api_solr_highlight_method', 'original'));
+  $config->save();
+
+  update_variable_del('search_api_solr_highlight_method');
+}
