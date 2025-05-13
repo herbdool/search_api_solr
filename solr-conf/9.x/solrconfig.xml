@@ -121,7 +121,6 @@
     -->
   <dataDir>${solr.data.dir:}</dataDir>
 
-
   <!-- The DirectoryFactory to use for indexes.
 
        solr.StandardDirectoryFactory is filesystem
@@ -372,7 +371,6 @@
          postCommit - fired after every commit or optimize command
          postOptimize - fired after every optimize command
       -->
-
   </updateHandler>
 
   <!-- IndexReaderFactory
@@ -387,7 +385,6 @@
        IndexReaderFactory may change without warning or may even be
        removed from future releases if the problems cannot be
        resolved.
-
 
        ** Features that may not work with custom IndexReaderFactory **
 
@@ -537,7 +534,6 @@
               regenerator="com.mycompany.MyRegenerator"
               />
       -->
-
 
     <!-- Lazy Field Loading
 
@@ -1757,7 +1753,6 @@
        <healthcheck type="file">server-enabled</healthcheck>
       -->
   </admin>
-
 
   <!-- Following is a dynamic way to include other components or any customized solrconfig.xml stuff, added by other modules -->
   <xi:include href="solrconfig_extra.xml" xmlns:xi="http://www.w3.org/2001/XInclude">
