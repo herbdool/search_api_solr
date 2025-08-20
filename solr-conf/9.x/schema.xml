@@ -471,6 +471,16 @@
     -->
     <field name="_version_" type="long" indexed="true" stored="true" multiValued="false"/>
 
+    <!-- If you don't use child/nested documents, then you should remove the next two fields:  -->
+    <!-- for nested documents (minimal; points to root document) -->
+    <!--
+    <field name="_root_" type="string" indexed="true" stored="false" />
+    -->
+    <!-- for nested documents (relationship tracking) -->
+    <!--
+    <field name="_nest_path_" type="_nest_path_" /><fieldType name="_nest_path_" class="solr.NestPathField" />
+    -->
+
     <!-- Search Api specific fields -->
     <!-- item_id contains the entity ID, e.g. a node's nid. -->
     <field name="item_id"  type="string" indexed="true" stored="true" />

@@ -10,7 +10,7 @@
  http://wiki.apache.org/solr/SchemaXml
 -->
 
-<schema name="drupal-4.4-solr-8.x" version="1.6">
+<schema name="drupal-4.4-solr-8.x" version="1.5">
     <!-- attribute "name" is the name of this schema and is only used for
          display purposes. Applications should change this to reflect the nature
          of the search collection.
