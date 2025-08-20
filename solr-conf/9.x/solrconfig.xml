@@ -121,6 +121,7 @@
     -->
   <dataDir>${solr.data.dir:}</dataDir>
 
+
   <!-- The DirectoryFactory to use for indexes.
 
        solr.StandardDirectoryFactory is filesystem
@@ -386,6 +387,7 @@
        removed from future releases if the problems cannot be
        resolved.
 
+
        ** Features that may not work with custom IndexReaderFactory **
 
        The ReplicationHandler assumes a disk-resident index. Using a
@@ -534,6 +536,7 @@
               regenerator="com.mycompany.MyRegenerator"
               />
       -->
+
 
     <!-- Lazy Field Loading
 
@@ -1753,6 +1756,7 @@
        <healthcheck type="file">server-enabled</healthcheck>
       -->
   </admin>
+
 
   <!-- Following is a dynamic way to include other components or any customized solrconfig.xml stuff, added by other modules -->
   <xi:include href="solrconfig_extra.xml" xmlns:xi="http://www.w3.org/2001/XInclude">
