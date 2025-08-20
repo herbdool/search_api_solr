@@ -1,5 +1,12 @@
 Solr search 1.x, xxxx-xx-xx (development version)
 -----------------------
+
+Solr search 1.19, 2025-08-20
+-----------------------
+- Improved Solr 8 & 9 default configurations
+
+Solr search 1.18, 2025-05-13
+-----------------------
 - Add Solr 9 default configuration
 
 Search API Solr Search 1.17 (2025-04-07):
