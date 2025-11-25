@@ -101,7 +101,7 @@ function search_api_solr_update_1000() {
 }
 
 /**
- * Move settings from variables to config.
+ * Save default setting for highlight method.
  */
 function search_api_solr_update_1001() {
   // Migrate variables to config.
@@ -111,3 +111,4 @@ function search_api_solr_update_1001() {
 
   update_variable_del('search_api_solr_highlight_method');
 }
+
